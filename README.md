@@ -122,6 +122,8 @@ week program and presets to the backup folder.
 
 ## Lovelace card
 
+<img src="docs/images/toon-program-card.jpg" alt="Toon Program Lovelace card" width="420">
+
 The integration serves its own card and registers it as a frontend module, so no
 Lovelace resource has to be added. The URL contains the integration version,
 which refreshes the browser cache after an update.
