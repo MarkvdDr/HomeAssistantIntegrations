@@ -1,0 +1,48 @@
+{
+  "entity": {
+    "sensor": {
+      "week_program": { "default": "mdi:calendar-week" },
+      "current_preset": {
+        "default": "mdi:thermostat",
+        "state": {
+          "comfort": "mdi:sofa",
+          "home": "mdi:home",
+          "sleep": "mdi:sleep",
+          "away": "mdi:home-export-outline",
+          "holiday": "mdi:beach"
+        }
+      },
+      "program_temperature": { "default": "mdi:thermometer-auto" },
+      "next_preset": {
+        "default": "mdi:skip-next-circle-outline",
+        "state": {
+          "comfort": "mdi:sofa",
+          "home": "mdi:home",
+          "sleep": "mdi:sleep",
+          "away": "mdi:home-export-outline",
+          "holiday": "mdi:beach"
+        }
+      },
+      "next_change": { "default": "mdi:clock-start" }
+    },
+    "number": {
+      "preset_comfort": { "default": "mdi:sofa" },
+      "preset_home": { "default": "mdi:home" },
+      "preset_sleep": { "default": "mdi:sleep" },
+      "preset_away": { "default": "mdi:home-export-outline" },
+      "preset_holiday": { "default": "mdi:beach" }
+    },
+    "button": {
+      "create_backup": { "default": "mdi:content-save-outline" }
+    },
+    "calendar": {
+      "week_program": { "default": "mdi:calendar-week" }
+    }
+  },
+  "services": {
+    "set_schedule": { "service": "mdi:calendar-edit" },
+    "set_day": { "service": "mdi:calendar-today" },
+    "create_backup": { "service": "mdi:content-save-outline" },
+    "restore_backup": { "service": "mdi:backup-restore" }
+  }
+}

@@ -1,0 +1,200 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Connect your Toon",
+        "description": "Enter the address of a rooted Toon. The week program and the temperature presets are read and written through the local hcb_config interface; no cloud and no account are involved.",
+        "data": {
+          "host": "Host",
+          "port": "Port",
+          "name": "Name",
+          "scan_interval": "Refresh interval (seconds)"
+        },
+        "data_description": {
+          "host": "IP address or host name of the Toon, for example 192.168.1.50.",
+          "port": "Port of the local web interface (80 unless you changed it).",
+          "name": "Name of the device in Home Assistant.",
+          "scan_interval": "How often the program is read. The program rarely changes, so 300 seconds is plenty. Minimum 30."
+        }
+      },
+      "reconfigure": {
+        "title": "Change the address of your Toon",
+        "description": "Use this after the Toon received a new IP address. Your entities and dashboards stay as they are.",
+        "data": {
+          "host": "Host",
+          "port": "Port"
+        },
+        "data_description": {
+          "host": "IP address or host name of the Toon.",
+          "port": "Port of the local web interface."
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Cannot reach the Toon. Check the address and that the Toon is rooted and online.",
+      "invalid_response": "The Toon answered, but not with a usable week program. Is this a rooted Toon with the thermostat app?",
+      "invalid_host": "Enter an IP address or host name.",
+      "unknown": "Unexpected error. See the Home Assistant log for details."
+    },
+    "abort": {
+      "already_configured": "This Toon is already configured.",
+      "reconfigure_successful": "The address of the Toon was updated."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Toon Program options",
+        "data": {
+          "scan_interval": "Refresh interval (seconds)"
+        },
+        "data_description": {
+          "scan_interval": "How often the program is read from the Toon. Minimum 30 seconds."
+        }
+      }
+    }
+  },
+  "entity": {
+    "number": {
+      "preset_comfort": {
+        "name": "Comfort temperature"
+      },
+      "preset_home": {
+        "name": "Home temperature"
+      },
+      "preset_sleep": {
+        "name": "Sleep temperature"
+      },
+      "preset_away": {
+        "name": "Away temperature"
+      },
+      "preset_holiday": {
+        "name": "Holiday temperature"
+      }
+    },
+    "sensor": {
+      "week_program": {
+        "name": "Week program"
+      },
+      "current_preset": {
+        "name": "Active preset",
+        "state": {
+          "comfort": "Comfort",
+          "home": "Home",
+          "sleep": "Sleep",
+          "away": "Away",
+          "holiday": "Holiday"
+        }
+      },
+      "program_temperature": {
+        "name": "Program temperature"
+      },
+      "next_preset": {
+        "name": "Next preset",
+        "state": {
+          "comfort": "Comfort",
+          "home": "Home",
+          "sleep": "Sleep",
+          "away": "Away",
+          "holiday": "Holiday"
+        }
+      },
+      "next_change": {
+        "name": "Next change"
+      }
+    },
+    "button": {
+      "create_backup": {
+        "name": "Create backup"
+      }
+    },
+    "calendar": {
+      "week_program": {
+        "name": "Week program"
+      }
+    }
+  },
+  "services": {
+    "set_schedule": {
+      "name": "Set week program",
+      "description": "Replaces the complete week program on the Toon. The end of a block is the start of the next one, so the last block of the week runs until the first block.",
+      "fields": {
+        "blocks": {
+          "name": "Blocks",
+          "description": "List of blocks. day: monday..sunday (or maandag..zondag), time: HH:MM, preset: comfort, home, sleep, away or holiday."
+        }
+      }
+    },
+    "set_day": {
+      "name": "Set day program",
+      "description": "Replaces the blocks that start on one day. The other days are kept as they are. An empty list removes all blocks of the day, so the previous day continues.",
+      "fields": {
+        "day": {
+          "name": "Day",
+          "description": "The day to replace."
+        },
+        "blocks": {
+          "name": "Blocks",
+          "description": "List of blocks with a time (HH:MM) and a preset."
+        }
+      }
+    },
+    "create_backup": {
+      "name": "Create backup",
+      "description": "Saves the week program and the preset temperatures to the backup folder in your Home Assistant configuration."
+    },
+    "restore_backup": {
+      "name": "Restore backup",
+      "description": "Writes a backup back to the Toon. Without a file name the newest backup of the chosen kind is used, which undoes the last change.",
+      "fields": {
+        "kind": {
+          "name": "Kind",
+          "description": "Restore the week program or the preset temperatures."
+        },
+        "filename": {
+          "name": "File name",
+          "description": "A specific backup file, as listed in the backups attribute of the week program sensor."
+        }
+      }
+    }
+  },
+  "selector": {
+    "day": {
+      "options": {
+        "monday": "Monday",
+        "tuesday": "Tuesday",
+        "wednesday": "Wednesday",
+        "thursday": "Thursday",
+        "friday": "Friday",
+        "saturday": "Saturday",
+        "sunday": "Sunday"
+      }
+    },
+    "backup_kind": {
+      "options": {
+        "program": "Week program",
+        "presets": "Preset temperatures"
+      }
+    }
+  },
+  "exceptions": {
+    "cannot_connect": {
+      "message": "Cannot reach the Toon: {error}"
+    },
+    "write_failed": {
+      "message": "The Toon did not accept the change: {error}"
+    },
+    "invalid_data": {
+      "message": "Invalid input: {error}"
+    },
+    "backup_failed": {
+      "message": "The backup could not be made: {error}"
+    },
+    "backup_not_found": {
+      "message": "There is no backup of this kind yet."
+    },
+    "backup_unreadable": {
+      "message": "The backup cannot be used: {error}"
+    }
+  }
+}

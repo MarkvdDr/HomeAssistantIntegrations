@@ -1,0 +1,69 @@
+set_schedule:
+  target:
+    entity:
+      integration: toon_program
+      domain: sensor
+  fields:
+    blocks:
+      required: true
+      example: >-
+        [{"day": "monday", "time": "07:30", "preset": "home"},
+        {"day": "monday", "time": "08:00", "preset": "away"},
+        {"day": "monday", "time": "22:00", "preset": "sleep"}]
+      selector:
+        object:
+
+set_day:
+  target:
+    entity:
+      integration: toon_program
+      domain: sensor
+  fields:
+    day:
+      required: true
+      example: saturday
+      selector:
+        select:
+          translation_key: day
+          options:
+            - monday
+            - tuesday
+            - wednesday
+            - thursday
+            - friday
+            - saturday
+            - sunday
+    blocks:
+      required: true
+      example: >-
+        [{"time": "09:00", "preset": "comfort"},
+        {"time": "23:00", "preset": "sleep"}]
+      selector:
+        object:
+
+create_backup:
+  target:
+    entity:
+      integration: toon_program
+      domain: sensor
+
+restore_backup:
+  target:
+    entity:
+      integration: toon_program
+      domain: sensor
+  fields:
+    kind:
+      required: false
+      default: program
+      selector:
+        select:
+          translation_key: backup_kind
+          options:
+            - program
+            - presets
+    filename:
+      required: false
+      example: program-20261122-195139-set_schedule.json
+      selector:
+        text:

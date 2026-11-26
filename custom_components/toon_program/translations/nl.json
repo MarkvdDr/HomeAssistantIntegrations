@@ -1,0 +1,200 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Verbind je Toon",
+        "description": "Vul het adres van een geroote Toon in. Het weekprogramma en de temperatuurpresets worden via de lokale hcb_config-interface gelezen en geschreven; er is geen cloud en geen account nodig.",
+        "data": {
+          "host": "Host",
+          "port": "Poort",
+          "name": "Naam",
+          "scan_interval": "Verversingsinterval (seconden)"
+        },
+        "data_description": {
+          "host": "IP-adres of hostnaam van de Toon, bijvoorbeeld 192.168.1.50.",
+          "port": "Poort van de lokale webinterface (80, tenzij je die hebt aangepast).",
+          "name": "Naam van het apparaat in Home Assistant.",
+          "scan_interval": "Hoe vaak het programma wordt uitgelezen. Het programma verandert zelden, dus 300 seconden is ruim voldoende. Minimaal 30."
+        }
+      },
+      "reconfigure": {
+        "title": "Adres van je Toon wijzigen",
+        "description": "Gebruik dit nadat de Toon een nieuw IP-adres heeft gekregen. Je entiteiten en dashboards blijven behouden.",
+        "data": {
+          "host": "Host",
+          "port": "Poort"
+        },
+        "data_description": {
+          "host": "IP-adres of hostnaam van de Toon.",
+          "port": "Poort van de lokale webinterface."
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Kan de Toon niet bereiken. Controleer het adres en of de Toon geroot en online is.",
+      "invalid_response": "De Toon antwoordt, maar niet met een bruikbaar weekprogramma. Is dit een geroote Toon met de thermostaat-app?",
+      "invalid_host": "Vul een IP-adres of hostnaam in.",
+      "unknown": "Onverwachte fout. Zie het Home Assistant-log voor details."
+    },
+    "abort": {
+      "already_configured": "Deze Toon is al geconfigureerd.",
+      "reconfigure_successful": "Het adres van de Toon is bijgewerkt."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Toon Program opties",
+        "data": {
+          "scan_interval": "Verversingsinterval (seconden)"
+        },
+        "data_description": {
+          "scan_interval": "Hoe vaak het programma van de Toon wordt gelezen. Minimaal 30 seconden."
+        }
+      }
+    }
+  },
+  "entity": {
+    "number": {
+      "preset_comfort": {
+        "name": "Temperatuur comfort"
+      },
+      "preset_home": {
+        "name": "Temperatuur thuis"
+      },
+      "preset_sleep": {
+        "name": "Temperatuur slapen"
+      },
+      "preset_away": {
+        "name": "Temperatuur weg"
+      },
+      "preset_holiday": {
+        "name": "Temperatuur vakantie"
+      }
+    },
+    "sensor": {
+      "week_program": {
+        "name": "Weekprogramma"
+      },
+      "current_preset": {
+        "name": "Actieve preset",
+        "state": {
+          "comfort": "Comfort",
+          "home": "Thuis",
+          "sleep": "Slapen",
+          "away": "Weg",
+          "holiday": "Vakantie"
+        }
+      },
+      "program_temperature": {
+        "name": "Programmatemperatuur"
+      },
+      "next_preset": {
+        "name": "Volgende preset",
+        "state": {
+          "comfort": "Comfort",
+          "home": "Thuis",
+          "sleep": "Slapen",
+          "away": "Weg",
+          "holiday": "Vakantie"
+        }
+      },
+      "next_change": {
+        "name": "Volgende wijziging"
+      }
+    },
+    "button": {
+      "create_backup": {
+        "name": "Back-up maken"
+      }
+    },
+    "calendar": {
+      "week_program": {
+        "name": "Weekprogramma"
+      }
+    }
+  },
+  "services": {
+    "set_schedule": {
+      "name": "Weekprogramma instellen",
+      "description": "Vervangt het volledige weekprogramma op de Toon. Het einde van een blok is het begin van het volgende, dus het laatste blok van de week loopt door tot het eerste blok.",
+      "fields": {
+        "blocks": {
+          "name": "Blokken",
+          "description": "Lijst met blokken. day: maandag..zondag (of monday..sunday), time: UU:MM, preset: comfort, home, sleep, away of holiday."
+        }
+      }
+    },
+    "set_day": {
+      "name": "Dagprogramma instellen",
+      "description": "Vervangt de blokken die op één dag starten. De andere dagen blijven zoals ze zijn. Een lege lijst verwijdert alle blokken van die dag, waardoor de vorige dag doorloopt.",
+      "fields": {
+        "day": {
+          "name": "Dag",
+          "description": "De dag die vervangen wordt."
+        },
+        "blocks": {
+          "name": "Blokken",
+          "description": "Lijst met blokken met een tijd (UU:MM) en een preset."
+        }
+      }
+    },
+    "create_backup": {
+      "name": "Back-up maken",
+      "description": "Bewaart het weekprogramma en de presettemperaturen in de back-upmap van je Home Assistant-configuratie."
+    },
+    "restore_backup": {
+      "name": "Back-up terugzetten",
+      "description": "Schrijft een back-up terug naar de Toon. Zonder bestandsnaam wordt de nieuwste back-up van het gekozen type gebruikt; dat maakt de laatste wijziging ongedaan.",
+      "fields": {
+        "kind": {
+          "name": "Type",
+          "description": "Het weekprogramma of de presettemperaturen terugzetten."
+        },
+        "filename": {
+          "name": "Bestandsnaam",
+          "description": "Een specifiek back-upbestand, zoals genoemd in het attribuut backups van de weekprogramma-sensor."
+        }
+      }
+    }
+  },
+  "selector": {
+    "day": {
+      "options": {
+        "monday": "Maandag",
+        "tuesday": "Dinsdag",
+        "wednesday": "Woensdag",
+        "thursday": "Donderdag",
+        "friday": "Vrijdag",
+        "saturday": "Zaterdag",
+        "sunday": "Zondag"
+      }
+    },
+    "backup_kind": {
+      "options": {
+        "program": "Weekprogramma",
+        "presets": "Presettemperaturen"
+      }
+    }
+  },
+  "exceptions": {
+    "cannot_connect": {
+      "message": "Kan de Toon niet bereiken: {error}"
+    },
+    "write_failed": {
+      "message": "De Toon heeft de wijziging niet doorgevoerd: {error}"
+    },
+    "invalid_data": {
+      "message": "Ongeldige invoer: {error}"
+    },
+    "backup_failed": {
+      "message": "De back-up kon niet worden gemaakt: {error}"
+    },
+    "backup_not_found": {
+      "message": "Er is nog geen back-up van dit type."
+    },
+    "backup_unreadable": {
+      "message": "De back-up is niet bruikbaar: {error}"
+    }
+  }
+}

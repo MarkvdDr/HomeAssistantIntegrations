@@ -1,0 +1,14 @@
+{
+  "domain": "toon_program",
+  "name": "Toon Program",
+  "after_dependencies": ["frontend"],
+  "codeowners": ["@MarkvdDr"],
+  "config_flow": true,
+  "dependencies": ["http"],
+  "documentation": "https://github.com/MarkvdDr/HomeAssistantIntegrations",
+  "integration_type": "device",
+  "iot_class": "local_polling",
+  "issue_tracker": "https://github.com/MarkvdDr/HomeAssistantIntegrations/issues",
+  "requirements": [],
+  "version": "1.1.4"
+}
