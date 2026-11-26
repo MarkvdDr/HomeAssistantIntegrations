@@ -297,18 +297,6 @@ Diagnostics: **Settings → Devices & services → Toon Program → Download
 diagnostics** shows the presets, the program, the backups and the last update
 status.
 
-## Development
-
-The parsing layer and the asset checks have no Home Assistant dependency, so the
-tests run with a plain Python 3.12+ interpreter:
-
-```bash
-python -m unittest discover -s tests -v
-```
-
-The repository also runs hassfest, the HACS validation and the tests on every
-push and pull request.
-
 ## License
 
 MIT — see [LICENSE](LICENSE).
